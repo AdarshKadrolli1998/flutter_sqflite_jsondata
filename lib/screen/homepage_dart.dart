@@ -69,6 +69,16 @@ class _HomePageState extends State<Employ> {
     print('All employees deleted');
   }
 
+  void _update(id) async{
+    // Map<String, dynamic> row = {
+      // DatabaseHelper.columnId : int.parse(id.text),
+      // DatabaseHelper.columnName: name.text,
+      // DatabaseHelper.columnAge : age.text
+    // };
+    // final rowsAffected = await dbHelper.update(row);
+    print('updated  row(s) $id');
+  }
+
   _buildEmployeeListView() {
     return FutureBuilder(
       future: DBProvider.db.getAllEmployees(),
@@ -85,44 +95,58 @@ class _HomePageState extends State<Employ> {
             ),
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, int index) {
-              return Card(
-                elevation: 5,
-                child: Column(
-                  children: [
-                    Container(
-                      child: Text("User Details",style: TextStyle(fontWeight: FontWeight.bold),),
-                    ),
-                    Row(
-                      children: [
-                        Text( "Name: ${snapshot.data[index].name}"),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text( "User Name: ${snapshot.data[index].username}"),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text( "Email: ${snapshot.data[index].email}"),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text( "Phone: ${snapshot.data[index].phone}"),
-                      ],
-                    ),
-                    // Row(
-                    //   children: [
-                    //     Text( "Website: ${snapshot.data[index].website}"),
-                    //   ],
-                    // ),
-                    // Row(
-                    //   children: [
-                    //     Text( "Name: ${snapshot.data[index].name}"),
-                    //   ],
-                    // )
-                  ],
+              return FlatButton(
+                padding: const EdgeInsets.all(0),
+                onPressed: () { _update(snapshot.data[index].id); },
+                child: Card(
+                  elevation: 5,
+                  child: Column(
+                    children: [
+                      Container(
+                        child: Text("User Details",style: TextStyle(fontWeight: FontWeight.bold),),
+                      ),
+                      Row(
+                        children: [
+                          Text( "Name: ${snapshot.data[index].name}"),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text( "User Name: ${snapshot.data[index].username}"),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text( "Email: ${snapshot.data[index].email}"),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text( "Phone: ${snapshot.data[index].phone}"),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text( "Website: ${snapshot.data[index].website}"),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text( "Name: ${snapshot.data[index].address.city}"),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text( "Name: ${snapshot.data[index].address.zipcode}"),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text( "Company Name: ${snapshot.data[index].company.cmp_name}"),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

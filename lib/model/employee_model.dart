@@ -5,44 +5,55 @@ List<Employee> employeeFromJson(String str) =>
 
 String employeeToJson(List<Employee>data) =>
     json.encode(List<dynamic>.from(data.map((x)=> x.toJson())));
-class Employee
-{
+
+class Employee {
   int id;
-  String email;
-  String username;
   String name;
-  String phone;
+  String username;
+  String email;
   Address address;
+  String phone;
+  String website;
+  Company company;
 
   Employee(
-      {
-        this.id,
-        this.email,
-        this.username,
+      {this.id,
         this.name,
+        this.username,
+        this.email,
+        this.address,
         this.phone,
-        this.address
-      }
-      );
+        this.website,
+        this.company,
+        });
 
-  factory Employee.fromJson(Map<String,dynamic>json) => Employee(
-      id: json["id"],
-      email: json["email"],
-      username: json["username"],
-      name: json["name"],
-      phone:json['phone'],
-      address:  json['address'] != null ? new Address.fromJson(json['address']) : null,
-  );
+  Employee.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    username = json['username'];
+    email = json['email'];
+    address = json['address'] != null ? new Address.fromJson(json['address']) : null;
+    phone = json['phone'];
+    website = json['website'];
+    company = json['company'] != null ? new Company.fromJson(json['company']) : null;
+  }
 
-  Map<String,dynamic>toJson() =>
-      {
-        "id":id,
-        "email":email,
-        "username":username,
-        "name":name,
-        "phone":phone,
-        "address": this.address
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['username'] = this.username;
+    data['email'] = this.email;
+    if (this.address != null) {
+      data['address'] = this.address.toJson();
+    }
+    data['phone'] = this.phone;
+    data['website'] = this.website;
+    if (this.company != null) {
+      data['company'] = this.company.toJson();
+    }
+    return data;
+  }
 }
 
 class Address {
@@ -53,22 +64,47 @@ class Address {
 
   Address({this.street, this.suite, this.city, this.zipcode,});
 
-  factory Address.fromJson(Map<String, dynamic> json) => Address(
-    street: json['street'],
-    suite: json['suite'],
-    city: json['city'],
-    zipcode: json['zipcode'],
-  );
+  Address.fromJson(Map<String, dynamic> json) {
+    street = json['street'];
+    suite = json['suite'];
+    city = json['city'];
+    zipcode = json['zipcode'];
+  }
 
-  Map<String,dynamic>toJson() =>
-      {
-        "street":street,
-        "suite":suite,
-        "city":city,
-        "zipcode":zipcode,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['street'] = this.street;
+    data['suite'] = this.suite;
+    data['city'] = this.city;
+    data['zipcode'] = this.zipcode;
+    return data;
+  }
 }
 
+class Company {
+  String cmp_name;
+  String catchPhrase;
+  String bs;
+
+  Company({this.cmp_name, this.catchPhrase, this.bs});
+
+  Company.fromJson(Map<String, dynamic> json) {
+    cmp_name = json['cmp_name'];
+    catchPhrase = json['catchPhrase'];
+    bs = json['bs'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['cmp_name'] = this.cmp_name;
+    data['catchPhrase'] = this.catchPhrase;
+    data['bs'] = this.bs;
+    return data;
+  }
+}
+
+
+//
 // class Geo {
 //   String lat;
 //   String lng;
