@@ -9,6 +9,7 @@ class Employ extends StatefulWidget {
 }
 
 class _HomePageState extends State<Employ> {
+  final dbHelper=DBProvider.db;
   var isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -69,15 +70,12 @@ class _HomePageState extends State<Employ> {
     print('All employees deleted');
   }
 
-  void _update(id) async{
-    // Map<String, dynamic> row = {
-      // DatabaseHelper.columnId : int.parse(id.text),
-      // DatabaseHelper.columnName: name.text,
-      // DatabaseHelper.columnAge : age.text
-    // };
-    // final rowsAffected = await dbHelper.update(row);
-    print('updated  row(s) $id');
-  }
+  // void _update(id) async{
+  //   // Map<String, dynamic> row = {
+  //   // };
+  //    await dbHelper.update(id);
+  //   print('updated  row(s) $id');
+  // }
 
   _buildEmployeeListView() {
     return FutureBuilder(
@@ -97,7 +95,10 @@ class _HomePageState extends State<Employ> {
             itemBuilder: (BuildContext context, int index) {
               return FlatButton(
                 padding: const EdgeInsets.all(0),
-                onPressed: () { _update(snapshot.data[index].id); },
+                onPressed: ()async {
+                  await DBProvider.db.update(snapshot.data[index]);
+
+                },
                 child: Card(
                   elevation: 5,
                   child: Column(
@@ -142,7 +143,7 @@ class _HomePageState extends State<Employ> {
                       ),
                       Row(
                         children: [
-                          Text( "Company Name: ${snapshot.data[index].company.cmp_name}"),
+                          Text( "Company Name: ${snapshot.data[index].company.bs}"),
                         ],
                       ),
                     ],

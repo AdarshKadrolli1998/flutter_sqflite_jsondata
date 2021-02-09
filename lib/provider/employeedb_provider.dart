@@ -98,11 +98,14 @@ class DBProvider
     return list;
   }
 
-  // Future<int> update(Map<String, dynamic> row) async{
-  //   Database db= await database;
-  //   int id = row[columnId];
-  //   return await db.update(table, row, where: '$columnId=?', whereArgs: [id]);
-  // }
+  Future<int> update(Employee user) async{
+    Database db= await database;
+    return await db.update('Employee', {
+      'id': user.id,
+      'name': "adarsh",
+    },
+        where: "id = ?", whereArgs: [user.id]);
+  }
 
 }
 
